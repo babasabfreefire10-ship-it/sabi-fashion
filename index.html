@@ -1,0 +1,1266 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SABI FASHION</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff;
+    color: #111;
+}
+
+button {
+    cursor: pointer;
+}
+
+/* TOP */
+.top {
+    background: #111;
+    color: white;
+    text-align: center;
+    padding: 9px;
+    font-size: 11px;
+    letter-spacing: 1px;
+}
+
+/* NAVBAR */
+.navbar {
+    height: 70px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: 900;
+    letter-spacing: 4px;
+}
+
+.navlinks {
+    display: flex;
+    gap: 25px;
+}
+
+.navlinks a {
+    color: #111;
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.actions {
+    display: flex;
+    gap: 5px;
+}
+
+.icon-btn {
+    background: none;
+    border: none;
+    font-size: 21px;
+    padding: 8px;
+    position: relative;
+}
+
+.cart-count {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background: #111;
+    color: white;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* HERO */
+.hero {
+    max-width: 1250px;
+    margin: auto;
+    padding: 15px;
+}
+
+.hero-box {
+    min-height: 550px;
+    background:
+        linear-gradient(90deg, rgba(0,0,0,.75), rgba(0,0,0,.05)),
+        url("https://images.unsplash.com/photo-1523398002811-999ca8dec234?auto=format&fit=crop&w=1800&q=85")
+        center / cover;
+    display: flex;
+    align-items: flex-end;
+    padding: 45px;
+    color: white;
+}
+
+.hero h1 {
+    font-size: clamp(50px, 8vw, 90px);
+    line-height: .85;
+    margin: 10px 0 20px;
+    letter-spacing: -4px;
+}
+
+.hero p {
+    max-width: 430px;
+    line-height: 1.6;
+}
+
+.btn {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 15px 24px;
+    font-weight: bold;
+}
+
+.btn.white {
+    background: white;
+    color: #111;
+}
+
+/* SHOP */
+.section {
+    max-width: 1250px;
+    margin: auto;
+    padding: 45px 20px;
+}
+
+.section-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.section-head h2 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.categories {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin-bottom: 25px;
+}
+
+.category {
+    padding: 11px 18px;
+    border: 1px solid #ddd;
+    background: white;
+    white-space: nowrap;
+}
+
+.category.active {
+    background: #111;
+    color: white;
+}
+
+/* PRODUCTS */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+}
+
+.product {
+    cursor: pointer;
+}
+
+.product-image {
+    position: relative;
+    aspect-ratio: 3 / 4;
+    background: #f2f2f2;
+    overflow: hidden;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .3s;
+}
+
+.product:hover img {
+    transform: scale(1.04);
+}
+
+.tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: white;
+    padding: 6px 9px;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.product-info {
+    padding: 12px 0;
+}
+
+.product-name {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.product-price {
+    margin-top: 7px;
+    font-size: 14px;
+}
+
+/* DRAWER */
+.overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 500;
+}
+
+.cart {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: min(430px, 100%);
+    background: white;
+    padding: 25px;
+    overflow-y: auto;
+}
+
+.close {
+    float: right;
+    border: none;
+    background: none;
+    font-size: 28px;
+}
+
+.cart-item {
+    display: flex;
+    gap: 12px;
+    border-bottom: 1px solid #eee;
+    padding: 15px 0;
+}
+
+.cart-item img {
+    width: 75px;
+    height: 90px;
+    object-fit: cover;
+}
+
+.cart-info {
+    flex: 1;
+}
+
+.remove {
+    border: none;
+    background: none;
+    font-size: 20px;
+}
+
+.total {
+    font-size: 21px;
+    font-weight: bold;
+    margin: 25px 0;
+}
+
+/* PRODUCT MODAL */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.6);
+    z-index: 600;
+    overflow-y: auto;
+}
+
+.modal-box {
+    background: white;
+    width: min(900px, 94%);
+    margin: 5vh auto;
+    padding: 25px;
+}
+
+.product-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.product-detail img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    object-fit: cover;
+}
+
+.select {
+    width: 100%;
+    padding: 14px;
+    margin: 15px 0;
+    border: 1px solid #ddd;
+}
+
+/* CHECKOUT */
+.input {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+
+textarea.input {
+    min-height: 100px;
+}
+
+/* FOOTER */
+footer {
+    background: #111;
+    color: white;
+    padding: 45px 20px;
+    margin-top: 30px;
+}
+
+.footer-inner {
+    max-width: 1250px;
+    margin: auto;
+}
+
+/* MOBILE */
+@media(max-width: 800px) {
+
+    .navlinks {
+        display: none;
+    }
+
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+    }
+
+    .hero-box {
+        min-height: 470px;
+        padding: 28px;
+    }
+
+    .section {
+        padding: 35px 15px;
+    }
+
+    .product-detail {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="top">
+    TRANSPORT FALAS NË SHQIPËRI • POROSIT ONLINE
+</div>
+
+<header class="navbar">
+
+    <div class="logo">
+        SABI
+    </div>
+
+    <nav class="navlinks">
+        <a href="#shop">SHOP</a>
+        <a href="#new">TË REJA</a>
+        <a href="#shop">BLUZA</a>
+        <a href="#shop">TUTA</a>
+        <a href="#shop">SALE</a>
+    </nav>
+
+    <div class="actions">
+
+        <button class="icon-btn" onclick="openSearch()">
+            🔎
+        </button>
+
+        <button class="icon-btn" onclick="openCart()">
+            🛒
+            <span id="cartCount" class="cart-count">0</span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <div class="hero-box">
+
+        <div>
+
+            <small>
+                SABI COLLECTION 2026
+            </small>
+
+            <h1>
+                VISH<br>
+                STILIN<br>
+                TËND.
+            </h1>
+
+            <p>
+                Streetwear modern për stilin tënd.
+                Zgjidh produktin dhe porosite direkt online.
+            </p>
+
+            <button
+                class="btn white"
+                onclick="document.getElementById('shop').scrollIntoView()">
+                SHIKO KOLEKSIONIN
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section" id="new">
+
+    <div class="section-head">
+
+        <h2>
+            Produktet e reja
+        </h2>
+
+    </div>
+
+    <div
+        class="products"
+        id="newProducts">
+    </div>
+
+</section>
+
+
+<section class="section" id="shop">
+
+    <div class="section-head">
+
+        <h2>
+            SHOP
+        </h2>
+
+    </div>
+
+    <div class="categories">
+
+        <button
+            class="category active"
+            onclick="filterProducts('Të gjitha', this)">
+            Të gjitha
+        </button>
+
+        <button
+            class="category"
+            onclick="filterProducts('Bluza', this)">
+            Bluza
+        </button>
+
+        <button
+            class="category"
+            onclick="filterProducts('Tuta', this)">
+            Tuta
+        </button>
+
+        <button
+            class="category"
+            onclick="filterProducts('Pantallona', this)">
+            Pantallona
+        </button>
+
+    </div>
+
+    <div
+        class="products"
+        id="products">
+    </div>
+
+</section>
+
+
+<footer>
+
+    <div class="footer-inner">
+
+        <h2>
+            SABI FASHION
+        </h2>
+
+        <p>
+            Streetwear • Tirana • Albania
+        </p>
+
+    </div>
+
+</footer>
+
+
+<!-- CART -->
+
+<div
+    id="cartOverlay"
+    class="overlay"
+    onclick="closeCartOutside(event)">
+
+    <div class="cart">
+
+        <button
+            class="close"
+            onclick="closeCart()">
+            ×
+        </button>
+
+        <h2>
+            Shporta
+        </h2>
+
+        <div id="cartItems"></div>
+
+        <div
+            id="cartTotal"
+            class="total">
+            TOTAL: 0.00 €
+        </div>
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="openCheckout()">
+
+            VAZHDO ME POROSINË
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- PRODUCT -->
+
+<div
+    id="productModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeProduct()">
+            ×
+        </button>
+
+        <div id="productDetail"></div>
+
+    </div>
+
+</div>
+
+
+<!-- CHECKOUT -->
+
+<div
+    id="checkoutModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeCheckout()">
+            ×
+        </button>
+
+        <h2>
+            Porosia
+        </h2>
+
+        <input
+            id="customerName"
+            class="input"
+            placeholder="Emri dhe mbiemri">
+
+        <input
+            id="customerPhone"
+            class="input"
+            placeholder="Numri i telefonit">
+
+        <input
+            id="customerAddress"
+            class="input"
+            placeholder="Adresa">
+
+        <textarea
+            id="customerNote"
+            class="input"
+            placeholder="Shënim për porosinë"></textarea>
+
+        <button
+            class="btn"
+            style="width:100%"
+            onclick="sendOrder()">
+
+            DËRGO POROSINË
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div
+    id="searchModal"
+    class="modal">
+
+    <div class="modal-box">
+
+        <button
+            class="close"
+            onclick="closeSearch()">
+            ×
+        </button>
+
+        <h2>
+            Kërko
+        </h2>
+
+        <input
+            id="searchInput"
+            class="input"
+            placeholder="Kërko produkt..."
+            oninput="searchProducts()">
+
+        <div
+            id="searchResults"
+            class="products">
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* PRODUKTET */
+
+const products = [
+
+    {
+        id: 1,
+        name: "Essential Black T-Shirt",
+        price: 19.90,
+        category: "Bluza",
+        image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=900&q=85",
+        new: true
+    },
+
+    {
+        id: 2,
+        name: "Premium White T-Shirt",
+        price: 21.90,
+        category: "Bluza",
+        image: "https://images.unsplash.com/photo-1562157873-818bc0726f68?auto=format&fit=crop&w=900&q=85",
+        new: true
+    },
+
+    {
+        id: 3,
+        name: "SABI Cargo Pants",
+        price: 39.90,
+        category: "Pantallona",
+        image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=900&q=85",
+        new: true
+    },
+
+    {
+        id: 4,
+        name: "Premium Black Tracksuit",
+        price: 54.90,
+        category: "Tuta",
+        image: "https://images.unsplash.com/photo-1551488831-00ddcb6c6bd3?auto=format&fit=crop&w=900&q=85",
+        new: true
+    },
+
+    {
+        id: 5,
+        name: "Grey Tracksuit",
+        price: 49.90,
+        category: "Tuta",
+        image: "https://images.unsplash.com/photo-1552374196-c4e7ffc6e126?auto=format&fit=crop&w=900&q=85"
+    },
+
+    {
+        id: 6,
+        name: "Relaxed Black Pants",
+        price: 34.90,
+        category: "Pantallona",
+        image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=900&q=85"
+    },
+
+    {
+        id: 7,
+        name: "SABI Logo T-Shirt",
+        price: 22.90,
+        category: "Bluza",
+        image: "https://images.unsplash.com/photo-1583743814966-8936f37f3841?auto=format&fit=crop&w=900&q=85"
+    },
+
+    {
+        id: 8,
+        name: "Oversized Cream Tee",
+        price: 23.90,
+        category: "Bluza",
+        image: "https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=900&q=85"
+    }
+
+];
+
+
+/* SHPORTA */
+
+let cart = JSON.parse(
+    localStorage.getItem("sabiCart") || "[]"
+);
+
+
+/* FORMAT ÇMIMI */
+
+function money(price) {
+
+    return price.toFixed(2) + " €";
+
+}
+
+
+/* KARTA E PRODUKTIT */
+
+function productCard(product) {
+
+    return `
+
+        <div
+            class="product"
+            onclick="openProduct(${product.id})">
+
+            <div class="product-image">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}">
+
+                <span class="tag">
+                    ${product.new ? "NEW" : product.category.toUpperCase()}
+                </span>
+
+            </div>
+
+            <div class="product-info">
+
+                <div class="product-name">
+                    ${product.name}
+                </div>
+
+                <div class="product-price">
+                    ${money(product.price)}
+                </div>
+
+            </div>
+
+        </div>
+
+    `;
+
+}
+
+
+/* SHFAQ PRODUKTET */
+
+function renderProducts(list = products) {
+
+    document.getElementById("products").innerHTML =
+        list.map(productCard).join("");
+
+    document.getElementById("newProducts").innerHTML =
+        products
+        .filter(product => product.new)
+        .slice(0,4)
+        .map(productCard)
+        .join("");
+
+}
+
+
+/* FILTRO */
+
+function filterProducts(category, button) {
+
+    document
+        .querySelectorAll(".category")
+        .forEach(btn => btn.classList.remove("active"));
+
+    button.classList.add("active");
+
+    if (category === "Të gjitha") {
+
+        renderProducts(products);
+
+    } else {
+
+        renderProducts(
+            products.filter(
+                product => product.category === category
+            )
+        );
+
+    }
+
+}
+
+
+/* PRODUKTI */
+
+function openProduct(id) {
+
+    const product =
+        products.find(product => product.id === id);
+
+    document.getElementById("productDetail").innerHTML = `
+
+        <div class="product-detail">
+
+            <img
+                src="${product.image}"
+                alt="${product.name}">
+
+            <div>
+
+                <small>
+                    ${product.category.toUpperCase()}
+                </small>
+
+                <h1>
+                    ${product.name}
+                </h1>
+
+                <h2>
+                    ${money(product.price)}
+                </h2>
+
+                <p>
+                    Zgjidh masën përpara se ta shtosh
+                    produktin në shportë.
+                </p>
+
+                <select
+                    id="productSize"
+                    class="select">
+
+                    <option value="S">S</option>
+                    <option value="M">M</option>
+                    <option value="L">L</option>
+                    <option value="XL">XL</option>
+
+                </select>
+
+                <button
+                    class="btn"
+                    style="width:100%"
+                    onclick="addToCart(${product.id})">
+
+                    SHTO NË SHPORTË
+
+                </button>
+
+            </div>
+
+        </div>
+
+    `;
+
+    document.getElementById("productModal").style.display =
+        "block";
+
+}
+
+
+/* MBYLL PRODUKT */
+
+function closeProduct() {
+
+    document.getElementById("productModal").style.display =
+        "none";
+
+}
+
+
+/* SHTO NË SHPORTË */
+
+function addToCart(id) {
+
+    const size =
+        document.getElementById("productSize").value;
+
+    cart.push({
+        id: id,
+        size: size
+    });
+
+    saveCart();
+
+    closeProduct();
+
+    openCart();
+
+}
+
+
+/* RUAJ SHPORTËN */
+
+function saveCart() {
+
+    localStorage.setItem(
+        "sabiCart",
+        JSON.stringify(cart)
+    );
+
+    updateCartCount();
+
+}
+
+
+/* NUMRI I SHPORTËS */
+
+function updateCartCount() {
+
+    document.getElementById("cartCount").textContent =
+        cart.length;
+
+}
+
+
+/* HAP SHPORTËN */
+
+function openCart() {
+
+    renderCart();
+
+    document.getElementById("cartOverlay").style.display =
+        "block";
+
+}
+
+
+/* MBYLL SHPORTËN */
+
+function closeCart() {
+
+    document.getElementById("cartOverlay").style.display =
+        "none";
+
+}
+
+
+/* MBYLL KUR KLIKON JASHTË */
+
+function closeCartOutside(event) {
+
+    if (event.target.id === "cartOverlay") {
+
+        closeCart();
+
+    }
+
+}
+
+
+/* SHFAQ SHPORTËN */
+
+function renderCart() {
+
+    const container =
+        document.getElementById("cartItems");
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            "<p>Shporta është bosh.</p>";
+
+        document.getElementById("cartTotal").textContent =
+            "TOTAL: 0.00 €";
+
+        return;
+
+    }
+
+    let total = 0;
+
+    container.innerHTML =
+        cart.map((item,index) => {
+
+            const product =
+                products.find(product =>
+                    product.id === item.id
+                );
+
+            total += product.price;
+
+            return `
+
+                <div class="cart-item">
+
+                    <img
+                        src="${product.image}">
+
+                    <div class="cart-info">
+
+                        <strong>
+                            ${product.name}
+                        </strong>
+
+                        <div>
+                            Masa: ${item.size}
+                        </div>
+
+                        <div>
+                            ${money(product.price)}
+                        </div>
+
+                    </div>
+
+                    <button
+                        class="remove"
+                        onclick="removeFromCart(${index})">
+
+                        ×
+
+                    </button>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+    document.getElementById("cartTotal").textContent =
+        "TOTAL: " + money(total);
+
+}
+
+
+/* FSHI NGA SHPORTA */
+
+function removeFromCart(index) {
+
+    cart.splice(index,1);
+
+    saveCart();
+
+    renderCart();
+
+}
+
+
+/* CHECKOUT */
+
+function openCheckout() {
+
+    if (cart.length === 0) {
+
+        alert("Shporta është bosh.");
+
+        return;
+
+    }
+
+    closeCart();
+
+    document.getElementById("checkoutModal").style.display =
+        "block";
+
+}
+
+
+function closeCheckout() {
+
+    document.getElementById("checkoutModal").style.display =
+        "none";
+
+}
+
+
+/* DËRGO POROSINË */
+
+function sendOrder() {
+
+    const name =
+        document.getElementById("customerName").value.trim();
+
+    const phone =
+        document.getElementById("customerPhone").value.trim();
+
+    const address =
+        document.getElementById("customerAddress").value.trim();
+
+    const note =
+        document.getElementById("customerNote").value.trim();
+
+    if (!name || !phone || !address) {
+
+        alert(
+            "Plotëso emrin, telefonin dhe adresën."
+        );
+
+        return;
+
+    }
+
+    let message =
+        "Përshëndetje SABI FASHION!%0A%0A";
+
+    message +=
+        "Emri: " + encodeURIComponent(name) + "%0A";
+
+    message +=
+        "Telefon: " + encodeURIComponent(phone) + "%0A";
+
+    message +=
+        "Adresa: " + encodeURIComponent(address) + "%0A%0A";
+
+    message += "Produktet:%0A";
+
+    cart.forEach(item => {
+
+        const product =
+            products.find(product =>
+                product.id === item.id
+            );
+
+        message +=
+            "- " +
+            encodeURIComponent(product.name) +
+            " | Masa " +
+            item.size +
+            " | " +
+            money(product.price) +
+            "%0A";
+
+    });
+
+    if (note) {
+
+        message +=
+            "%0AShënim: " +
+            encodeURIComponent(note);
+
+    }
+
+    /*
+      ZËVENDËSO NUMRIN POSHTË ME NUMRIN
+      E WHATSAPP-IT TË SABI-T.
+      Shembull: 35569XXXXXXXX
+    */
+
+    const whatsappNumber =
+        "355690000000";
+
+    window.open(
+        "https://wa.me/" +
+        whatsappNumber +
+        "?text=" +
+        message,
+        "_blank"
+    );
+
+}
+
+
+/* KËRKIM */
+
+function openSearch() {
+
+    document.getElementById("searchModal").style.display =
+        "block";
+
+    document.getElementById("searchInput").focus();
+
+    searchProducts();
+
+}
+
+
+function closeSearch() {
+
+    document.getElementById("searchModal").style.display =
+        "none";
+
+}
+
+
+function searchProducts() {
+
+    const query =
+        document
+        .getElementById("searchInput")
+        .value
+        .toLowerCase();
+
+    const results =
+        products.filter(product =>
+
+            (
+                product.name +
+                " " +
+                product.category
+            )
+            .toLowerCase()
+            .includes(query)
+
+        );
+
+    document.getElementById("searchResults").innerHTML =
+        results.map(productCard).join("");
+
+}
+
+
+/* START */
+
+renderProducts();
+
+updateCartCount();
+
+</script>
+
+</body>
+</html>
